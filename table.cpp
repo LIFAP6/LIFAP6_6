@@ -2,13 +2,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdexcept>
+#include <string>
 //Table de hachage
 HashTable::HashTable(){
     printf("Création d'une table de hashage vide avec une correspondant à %d!\n",M);
     currentIndex = 0;
 }
 
-void HashTable::ajoutLineaire(Hashnode newCellToAdd){
+void HashTable::addingElement(Hashnode newCellToAdd){
     if(checkIfIndexIsAdded(newCellToAdd.getIndice())==-1){
         tableHashage[currentIndex] = newCellToAdd;
         printf("Ajout de l'élément ayant pour clé %d à l'adresse suivante : %d\n",newCellToAdd.getIndice(),currentIndex);
@@ -18,19 +19,18 @@ void HashTable::ajoutLineaire(Hashnode newCellToAdd){
         if(currentIndex==M){
             throw std::invalid_argument("Static table already filled");
         }else{
-            
+
         }
     }
 }
 
 void HashTable::update(Key key, double newPrice){
-    try{
-        int productId = checkIfIndexIsAdded(key);
-        if(productId != -1){
-            tableHashage[productId].setPrix(newPrice);
-        }
-    }catch(int e){
-
+    int productId = checkIfIndexIsAdded(key);
+    if(productId != -1){
+        tableHashage[productId].setPrix(newPrice);
+    }else{
+        printf("The key %d is invalid : missing from the hashtable!\n",key);
+        //throw std::invalid_argument("The key"+key+" is not present in the hashtable!");
     }
 }
 
@@ -44,8 +44,12 @@ int HashTable::checkIfIndexIsAdded(Key index){
 }
 
 void HashTable::displayInformation(Key productIndex){
-    Hashnode currentProduct = tableHashage[fetchIndex(productIndex)];
-    currentProduct.displayInformations();
+    try{
+        Hashnode currentProduct = tableHashage[fetchIndex(productIndex)];
+        currentProduct.displayInformations();
+    }catch(std::invalid_argument ia){
+        printf("%s",ia.what());
+    }
 }
 
 int HashTable::fetchIndex(Key key){
@@ -55,6 +59,14 @@ int HashTable::fetchIndex(Key key){
         }
     }
     throw std::invalid_argument("Unkown key : the product is missing from the table");
+}
+
+void HashTable::displayHashtable(){
+    printf("Tableau de hashage, taille : %d, nombre d'element ajoutes : %d.\n",M,currentIndex);
+    printf("-----------------Affichage des elements-----------------\n");
+    for(int i = 0;i<currentIndex;i++){
+        tableHashage[i].displayInformations();
+    }
 }
 
 //Destructeur
@@ -88,4 +100,7 @@ void Hashnode::displayInformations(){
 Hashnode::Hashnode(Key newObjectId, double newPrice){
     objectId = newObjectId;
     price = newPrice;
+}
+Hashnode::Hashnode(){
+    //Nothing here
 }

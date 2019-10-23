@@ -18,6 +18,7 @@
 
             //Constructors
             Hashnode(Key objectId, double price);
+            Hashnode();
 
             //Display infos
             void displayInformations();
@@ -34,7 +35,12 @@
             ~HashTable();
 
             //Ajout d'une donnée
-            void ajoutLineaire(Hashnode newCellToAdd);
+            void addingElement(Hashnode newCellToAdd);
+            /**
+             * Ajout linéaire
+             * Ajout quadratique
+             * Ajout par nombre premiers+code produit
+             */
 
             //Mise à jour des données
             void update(Key key, double newPrice);
@@ -45,6 +51,7 @@
 
             //Only for test!
             void displayInformation(Key index);
+            void displayHashtable();
     };
 
 #endif
