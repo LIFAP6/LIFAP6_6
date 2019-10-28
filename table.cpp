@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdexcept>
 #include <string>
+
+#define DEFAULT_HASH_KEY "LIFAP6 - Table de Hashage"
 //Table de hachage
 HashTable::HashTable(){
     printf("Création d'une table de hashage vide avec une correspondant à %d!\n",M);
@@ -24,14 +26,25 @@ void HashTable::addingElement(Hashnode newCellToAdd){
     }
 }
 
+int HashTable::generateHashKey(Hashnode element, std::string hashKey){
+    int decimalHashKey = stoi(hashKey);
+    std::string stringKey = std::to_string(element.getIndice())+std::to_string(element.getPrice());
+    int productHashKey = stoi(stringKey);
+    int generatedHashKey = decimalHashKey^generatedHashKey;
+    return generatedHashKey;
+}
+
 void HashTable::update(Key key, double newPrice){
     int productId = checkIfIndexIsAdded(key);
     if(productId != -1){
         tableHashage[productId].setPrix(newPrice);
     }else{
-        printf("The key %d is invalid : missing from the hashtable!\n",key);
-        //throw std::invalid_argument("The key"+key+" is not present in the hashtable!");
+        throw std::invalid_argument("The key"+std::to_string(key)+" is not present in the hashtable!");
     }
+}
+
+int HashTable::getProductIdLastUsedSlot(int productId){
+    return 0;
 }
 
 int HashTable::checkIfIndexIsAdded(Key index){

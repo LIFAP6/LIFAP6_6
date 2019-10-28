@@ -26,8 +26,9 @@
 
     class HashTable{
         private:
-            Hashnode tableHashage [M]; //Pour l'instant => clé ->N° Produit
+            Hashnode tableHashage [M]; //Key -> IdProduct+beginProductIndex+arriveNumber
             int currentIndex;
+            int beginProductIndex;
         public:
             //Constructeur
             HashTable();
@@ -36,11 +37,8 @@
 
             //Ajout d'une donnée
             void addingElement(Hashnode newCellToAdd);
-            /**
-             * Ajout linéaire
-             * Ajout quadratique
-             * Ajout par nombre premiers+code produit
-             */
+            int generateHashKey(Hashnode elem, std::string hashkey);
+            int getProductIdLastUsedSlot(int productId);
 
             //Mise à jour des données
             void update(Key key, double newPrice);
