@@ -1,7 +1,6 @@
 // LIFAP6 - Automne 2017 - R. Chaine
 
 #include <cstdio>
-#include <iostream>
 #include <string>
 using namespace std;
 #define TAB_MAX_SIZE 100
@@ -29,12 +28,12 @@ int main()
     scanf("%d",&tableSize);
     while (tableSize != (int)tableSize || tableSize<= 0 || tableSize>TAB_MAX_SIZE)
     {
-        cout << "Vous devez entrer un entier compris entre 1 et " << TAB_MAX_SIZE;
+        //cout << "Vous devez entrer un entier compris entre 1 et " << TAB_MAX_SIZE;
         scanf("%d",&tableSize);
         /* code */
     }
     
     printf("\nVeuillez entrer votre nom :");
-    cin >> userName;
+    //cin >> userName;
     return 0;
 }

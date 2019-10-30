@@ -1,6 +1,7 @@
 #ifndef table
 #define table
 #define M 16
+#include <string>
 
     typedef int Key;
 
@@ -26,9 +27,9 @@
 
     class HashTable{
         private:
-            Hashnode tableHashage [M]; //Key -> IdProduct+beginProductIndex+arriveNumber
+            Hashnode tableHashage [M]; //Key -> IdProduct+firstIndex+arrivedNumber
             int currentIndex;
-            int beginProductIndex;
+            int firstIndex;
         public:
             //Constructeur
             HashTable();
@@ -37,7 +38,6 @@
 
             //Ajout d'une donnée
             void addingElement(Hashnode newCellToAdd);
-            int generateHashKey(Hashnode elem, std::string hashkey);
             int getProductIdLastUsedSlot(int productId);
 
             //Mise à jour des données
@@ -50,6 +50,23 @@
             //Only for test!
             void displayInformation(Key index);
             void displayHashtable();
+
+            int getStockenProductKey(Key stockeProductKey);
+
+            void removeElement(Key key);
     };
+
+    /*class ProductId{
+        private:
+            int productId;
+            int lastSlotUsed;
+
+        public:
+            int getLastSlotUsed();
+            void addNewElement();
+            void removeElement();
+
+            ProductId(int productId);
+    };*/
 
 #endif

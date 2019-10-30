@@ -21,17 +21,30 @@ void HashTable::addingElement(Hashnode newCellToAdd){
         if(currentIndex==M){
             throw std::invalid_argument("Static table already filled");
         }else{
-
+            //Pas simple
+            Hashnode filteredHashTable [currentIndex];
+            std::string key = std::to_string(newCellToAdd.getIndice());
+            int max = -1;
+            int index = -1;
+            for(int i = 0;i<currentIndex;i++){
+                std::string currentKey = std::to_string(tableHashage[i].getIndice());
+                
+                if(key.find(currentIndex)){//Element contenue dans array
+                    std::string currentIndexId = currentKey.substr(0);
+                    int currentIndex = std::stoi(currentIndexId);
+                    if(currentIndex>max){
+                        std::string newIndex = std::to_string(newCellToAdd.getIndice())+currentIndexId;
+                        newCellToAdd.setPrix(std::stoi(newIndex));
+                    }
+                    filteredHashTable[i] = tableHashage[i];
+                    index = i;
+                }
+            }
+            if(max!=-1){
+                tableHashage[index] = newCellToAdd;
+            }
         }
     }
-}
-
-int HashTable::generateHashKey(Hashnode element, std::string hashKey){
-    int decimalHashKey = stoi(hashKey);
-    std::string stringKey = std::to_string(element.getIndice())+std::to_string(element.getPrice());
-    int productHashKey = stoi(stringKey);
-    int generatedHashKey = decimalHashKey^generatedHashKey;
-    return generatedHashKey;
 }
 
 void HashTable::update(Key key, double newPrice){
@@ -41,6 +54,10 @@ void HashTable::update(Key key, double newPrice){
     }else{
         throw std::invalid_argument("The key"+std::to_string(key)+" is not present in the hashtable!");
     }
+}
+
+int HashTable::getStockenProductKey(Key productKey){
+    return productKey+firstIndex;
 }
 
 int HashTable::getProductIdLastUsedSlot(int productId){
@@ -79,6 +96,18 @@ void HashTable::displayHashtable(){
     printf("-----------------Affichage des elements-----------------\n");
     for(int i = 0;i<currentIndex;i++){
         tableHashage[i].displayInformations();
+    }
+}
+
+void HashTable::removeElement(Key key){
+    for(int i = 0;i<currentIndex;i++){
+        if(tableHashage[i].getIndice() == key){
+            for(int j = i ; j<currentIndex ; j++){
+                tableHashage[j] = tableHashage[j+1];
+            }
+            currentIndex--;
+            break;
+        }
     }
 }
 
